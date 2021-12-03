@@ -81,14 +81,9 @@ def wheredata(deletefile=False):
 
     for colour in clr:
         # in all honesty i dont think a dot will appear on the selected points but this is just a "just in case"
-        if colour == ((0, 238, 2) or (0, 239, 1) or (0, 238, 1)):
+        if colour == (0, 239, 1):
             print("green detected")
-            try:
-                targetpoint = points[clr.index((0, 238, 2))]
-                targetpoint = points[clr.index((0, 239, 1))]
-                targetpoint = points[clr.index((0, 238, 1))]
-            except:
-                print("shit")
+            targetpoint = points[clr.index((0, 239, 1))]
             colourarray = []
             # generate 400 pixels surrounding the image
             for i in range(20):

@@ -17,7 +17,5 @@ while True:
         time.sleep(25)
     except Exception as e:
         # frankenstein'ed from past project
-        print("error appeared, error and time logged, data for {} not logged".format(time.strftime("%y, %m, %d, %H, %M, %S", time.gmtime())))
-        logging.error(time.strftime("%y, %m, %d, %H, %M", time.gmtime()) + traceback.format_exc())
-
-# TODO: make YAML file
+        print("error appeared, error and time logged, data for {} not logged".format(time.strftime("%y, %m, %d, %H, %M, %S", time.localtime())))
+        logging.error(time.strftime("%y, %m, %d, %H, %M", time.localtime()) + traceback.format_exc())
