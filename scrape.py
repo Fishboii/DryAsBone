@@ -47,16 +47,13 @@ def download_file(url):
 
 def extremevalues(targetlist, maximum=True):
     # max value True by default, min value is False
-    # takes list of tuples
-    target = targetlist[0]
-    for i in targetlist:
-        if maximum:
-            if (target[0] ** 2 + target[1] ** 2 + target[2] ** 2) < (i[0] ** 2 + i[1] ** 2 + i[2] ** 2):
-                target = i
-        elif not maximum:
-            if (target[0] ** 2 + target[1] ** 2 + target[2] ** 2) > (i[0] ** 2 + i[1] ** 2 + i[2] ** 2):
-                target = i
-    return target
+    # takes list of tuples, compares them to colourmap
+
+    indexedlist = [colourmap.colourmap.index(s) for s in targetlist]
+    if maximum:
+        return colourmap.colourmap[max(indexedlist)]
+    elif not maximum:
+        return colourmap.colourmap[min(indexedlist)]
 
 
 def wheredata(deletefile=False):
@@ -74,11 +71,13 @@ def wheredata(deletefile=False):
     # short html file so bs4 not needed, able to find with split easily
     imglink = html.text.split("\"")[1]
     filename = download_file(imglink)
+    # CHANGE filename for testing
     im = Image.open(filename)
 
     for i in points:
         # get pixel colour from each district
-        clr.append(im.getpixel((i[0], i[1])))
+        pixel = im.getpixel((i[0], i[1]))
+        clr.append((pixel[0], pixel[1], pixel[2]))
 
     for colour in clr:
         # in all honesty i dont think a dot will appear on the selected points but this is just a "just in case"
@@ -100,27 +99,27 @@ def wheredata(deletefile=False):
                 # in the case of black dot close
                 print()
                 clr[clr.index(colour)] = extremevalues(
-                    [s for s in colourarray if s != (0, 0, 0) or (0, 238, 2) or (0, 22, 89) or (0, 239, 1) or
+                    [s for s in colourarray if s != ((0, 0, 0) or (0, 238, 2) or (0, 22, 89) or (0, 239, 1)) or
                      (0, 238, 1)], False)
 
             elif (255, 255, 255) in colourarray:
                 # in the case of white dot close
                 clr[clr.index(colour)] = extremevalues(
-                    [s for s in colourarray if s != (255, 255, 255) or (0, 238, 2) or (0, 22, 89) or (0, 239, 1) or
+                    [s for s in colourarray if s != ((255, 255, 255) or (0, 238, 2) or (0, 22, 89) or (0, 239, 1)) or
                      (0, 238, 1)], True)
 
-        elif (0, 0, 0) == colour:
+        elif colour == (0, 0, 0) :
             print("black")
             # in the case of on black dot
-            clr[clr.index((0, 0, 0))] = extremevalues([s for s in clr if s != (0, 0, 0) or (0, 238, 2) or (0, 22, 89)],
+            clr[clr.index((0, 0, 0))] = extremevalues([s for s in clr if s != ((0, 0, 0) or (0, 238, 2) or (0, 22, 89))],
                                                       False)
 
-        elif (255, 255, 255) == colour:
+        elif colour == (255, 255, 255):
             print("white")
             # in the case of on white dot
             clr[clr.index((255, 255, 255))] = extremevalues(
-                [s for s in clr if s != (255, 255, 255) or (0, 238, 2) or (0, 22, 89)], True)
-    print(extremevalues([s for s in clr if s != (0, 0, 0) or (0, 238, 2) or (0, 22, 89)], False))
+                [s for s in clr if s != ((255, 255, 255) or (0, 238, 2) or (0, 22, 89))], True)
+
     pixels = []
     # add the relative intensity of each pixel on a scale of 100
     for i in clr:
