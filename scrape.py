@@ -124,7 +124,7 @@ def wheredata(deletefile=False):
     # add data to csv file
     fileappend = open("data.csv", "a")
     # add datetime
-    fileappend.write("\n{}".format(time.strftime("%y, %m, %d, %H, %M, %S", time.localtime()).replace(", ", "")))
+    fileappend.write("\n{}".format(time.time()))
     for i in pixels:
         fileappend.write(", {}".format(i))
     fileappend.close()
