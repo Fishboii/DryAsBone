@@ -1,4 +1,4 @@
-# DryAsBone
+# NoSunIntended
 
 Scrape and process pixels of a solar irradiance map
 
