@@ -54,8 +54,6 @@ def extremevalues(targetlist, maximum=True):
         if i not in illegal:
             indexedlist.append(colourmap.colourmap.index(i))
 
-    #indexedlist = [colourmap.colourmap.index(s) for s in targetlist if s != (0, 239, 1) or s != (0, 21, 90)]
-    print(indexedlist)
     if maximum:
         return colourmap.colourmap[max(indexedlist)]
     elif not maximum:
@@ -117,7 +115,7 @@ def wheredata(deletefile=False):
     # add the relative intensity of each pixel on a scale of 100
     for i in clr:
         index = colourmap.colourmap.index(i)
-        pixels.append(index * 100 / 255)
+        pixels.append(index * 100 / 256)
 
     # add data to csv file
     fileappend = open("data.csv", "a")
