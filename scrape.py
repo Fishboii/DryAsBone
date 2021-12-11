@@ -15,7 +15,7 @@ def weather():
     # get page and datasets
     html_page = requests.get('http://www.weather.gov.sg/weather-forecast-2hrnowcast-2/')
     soup = BeautifulSoup(html_page.content, 'html.parser')
-    fileappend = open("data.csv", "a")
+    fileappend = open("data2.csv", "a")
     for i in range(1, 49):
         # index 0 and 25 are titles, so skip them
         if i == 25:
@@ -118,7 +118,7 @@ def wheredata(deletefile=False):
         pixels.append(index * 100 / 256)
 
     # add data to csv file
-    fileappend = open("data.csv", "a")
+    fileappend = open("data2.csv", "a")
     # add datetime
     fileappend.write("\n{}".format(time.time()))
     for i in pixels:
